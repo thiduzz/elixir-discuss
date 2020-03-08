@@ -1,0 +1,5 @@
+<section class="flex items-center pt-10">
+  <div>
+    <%= @topic.title %>
+  </div>
+</section>

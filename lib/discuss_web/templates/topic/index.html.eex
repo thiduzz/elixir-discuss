@@ -1,0 +1,13 @@
+
+<div class="flex flex-col h-screen px-10 pt-10 shadow-lg ">
+  <h2 class="pb-10 text-4xl text-blue-500">Topics</h2>
+  <ul class="w-full">
+    <%= for topic <- @topics do %>
+      <%= content_tag :p, class: "py-2 border-round bg-white w-full shadow-lg my-2 px-5 cursor-pointer hover:opacity-75 flex flex-row items-center justify-between w-full" do %>
+        <span><%= topic.title %></span>
+        <%= link "Edit", to: Routes.topic_path(@conn, :edit, topic.id), class: "flex-end bg-blue-500 p-2 rounded-md text-white hover:opacity-75 hover:text-white" %>
+      <%= end %>
+    <% end %>
+  </ul>
+</div>
+<%= link "+", to: Routes.topic_path(@conn, :create), class: "fixed bottom-0 text-center right-0 w-20 h-20 m-10 text-5xl text-white bg-blue-500 border-0 rounded-full shadow-lg" %>
