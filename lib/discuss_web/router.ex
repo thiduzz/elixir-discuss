@@ -17,9 +17,12 @@ defmodule DiscussWeb.Router do
     pipe_through :browser
 
     get "/topics", TopicController, :index
-    post "/topics", TopicController, :store
     get "/topics/create", TopicController, :create
     get "/topics/edit/:id", TopicController, :edit
+
+    post "/topics", TopicController, :store
+    put "/topics/:id", TopicController, :update
+    delete "/topics/:id", TopicController, :destroy
 
   end
 
