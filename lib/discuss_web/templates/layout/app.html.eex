@@ -7,14 +7,29 @@
     <title><%= assigns[:page_title] || "Discuss · Phoenix Framework" %></title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/752d051359.js" crossorigin="anonymous"></script>
     <%= csrf_meta_tag() %>
   </head>
   <body>
-    <nav class="flex w-full py-5 bg-blue-500 shadow-lg ">
-      <div class="container nav-wrapper">
+    <nav class="flex w-full py-5 bg-blue-500 shadow-lg items-center">
+      <div class="container nav-wrapper flex flex-row justify-between">
         <a href="/" class="text-5xl text-white hover:text-white hover:opacity-75">
           Discussion
         </a>
+        <%= if @conn.assigns[:user] do %>
+
+          <%= link to: Routes.auth_path(@conn, :logout),  class: "flex items-center hover:opacity-75 px-10 border border-white border-solid text-white"  do %>
+            Logout
+          <%= end %>
+
+        <%= else %>
+
+          <%= link to: Routes.auth_path(@conn, :redirect, :github),  class: "flex items-center hover:opacity-75 px-10 border border-white border-solid text-white"  do %>
+            Login with
+            <i class="fab fa-github fa-2x text-white ml-5"></i>
+          <%= end %>
+          
+        <%= end %>
       </div>
     </nav>
     <main role="main" class="container py-10">

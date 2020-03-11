@@ -1,0 +1,45 @@
+# Version of docker-compose
+version: '3'
+
+# Containers we are going to run
+services:
+  # Our Phoenix container
+  phoenix:
+    # The build parameters for this container.
+    build:
+      # Here we define that it should build from the current directory
+      context: .
+    entrypoint: dockerize -template ./.docker/app/.env:.env -wait tcp://db:5432 -timeout 40s ./.docker/entrypoint.sh  
+    environment:
+      # Variables to connect to our Postgres server
+      PGUSER: ${DB_USER}
+      PGPASSWORD: ${DB_PASSWORD}
+      PGDATABASE: ${DB_DATABASE}
+      PGPORT: 5432
+      # Hostname of our Postgres container
+      PGHOST: ${DB_HOST}
+    ports:
+      # Mapping the port to make the Phoenix app accessible outside of the container
+      - "4000:4000"
+    depends_on:
+        # The db container needs to be started before we start this container
+        - db
+
+    networks:
+        - app-network
+  db:
+    # We use the predefined Postgres image
+    image: postgres:9.6
+    environment:
+      # Set user/password for Postgres
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      # Set a path where Postgres should store the data
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+    volumes:
+      - ./.docker/pgdata:/var/lib/postgresql/data
+
+networks:
+    app-network:
+    driver: bridge
