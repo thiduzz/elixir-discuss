@@ -8,7 +8,6 @@ defmodule DiscussWeb.AuthController do
 
   @spec callback(%{assings: %{ueberauth_auth: any}}, any) :: nil
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, %{"provider" => social_network_provider} = _params) do
-    IO.inspect(auth)
     user_params = %{
       token: auth.credentials.token,
       email: auth.info.email,

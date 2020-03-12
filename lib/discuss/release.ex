@@ -3,13 +3,11 @@ defmodule Discuss.Release do
 
   def migrate do
     for repo <- repos() do
-      IO.inspect(repo)
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
     end
   end
 
   def rollback(repo, version) do
-    IO.inspect(repo)
     {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 

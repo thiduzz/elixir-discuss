@@ -7,6 +7,7 @@ db_user = System.fetch_env!("DB_USER")
 db_password = System.fetch_env!("DB_PASSWORD")
 db_host = System.fetch_env!("DB_HOST")
 db_database = System.fetch_env!("DB_DATABASE")
+db_poolsize = System.fetch_env!("DB_POOLSIZE")
 
 config :discuss, DiscussWeb.Endpoint,
   http: [:inet6, port: String.to_integer(app_port)],

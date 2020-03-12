@@ -1,21 +1,19 @@
 # Version of docker-compose
-version: '3'
+version: '3.1'
 
 # Containers we are going to run
 services:
   # Our Phoenix container
   phoenix:
     # The build parameters for this container.
-    build:
-      # Here we define that it should build from the current directory
-      context: .
+    image: discussion
     entrypoint: dockerize -template ./.docker/app/.env:.env -wait tcp://db:5432 -timeout 40s ./.docker/entrypoint.sh  
     environment:
       # Variables to connect to our Postgres server
       PGUSER: ${DB_USER}
       PGPASSWORD: ${DB_PASSWORD}
       PGDATABASE: ${DB_DATABASE}
-      PGPORT: 5432
+      PGPORT: ${DB_PORT}
       # Hostname of our Postgres container
       PGHOST: ${DB_HOST}
     ports:

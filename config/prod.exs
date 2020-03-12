@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
@@ -16,7 +16,7 @@ config :discuss, DiscussWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :demo, DiscussWeb.Endpoint, server: true
+config :discuss, DiscussWeb.Endpoint, server: true
 
 # ## SSL Support
 #
@@ -55,3 +55,11 @@ config :demo, DiscussWeb.Endpoint, server: true
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
 #import_config "prod.secret.exs"
+
+# Configure your database
+config :discuss, Discuss.Repo,
+  username: System.get_env("DB_USER"),
+  password: System.get_env("DB_PASSWORD"),
+  database: System.get_env("DB_DATABASE"),
+  hostname: System.get_env("DB_HOST"),
+  pool_size: 10
