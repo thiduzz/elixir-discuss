@@ -24,7 +24,6 @@ services:
     depends_on:
         # The db container needs to be started before we start this container
         - db
-
     networks:
         - app-network
   db:
@@ -42,4 +41,4 @@ services:
 
 networks:
     app-network:
-    driver: bridge
+        driver: bridge
