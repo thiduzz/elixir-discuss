@@ -7,7 +7,7 @@ services:
   phoenix:
     # The build parameters for this container.
     image: discussion
-    entrypoint: dockerize -template ./.docker/app/.env:.env -wait tcp://db:5432 -timeout 40s ./.docker/entrypoint.sh  
+    restart: always  
     environment:
       # Variables to connect to our Postgres server
       PGUSER: ${DB_USER}
@@ -27,6 +27,7 @@ services:
   db:
     # We use the predefined Postgres image
     image: postgres:9.6
+    restart: always  
     environment:
       # Set user/password for Postgres
       POSTGRES_USER: ${DB_USER}

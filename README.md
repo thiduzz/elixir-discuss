@@ -21,17 +21,17 @@ Create a .env within a .docker/app directory
 Comment out the following line in the prod.exs
 import_config "prod.secret.exs"
 
-Add init method to the /lib/NAME_OF_YOUR_APP_web/endpoint.ex
+Add init method to the /lib/discuss/endpoint.ex
 
-Create a release.ex within /lib/NAME_OF_YOUR_APP dir
+Create a release.ex within /lib/discuss dir
 
 Run the following commands:
 
 mix phx.digest
 MIX_ENV=prod mix release
 set -o allexport; source ./.docker/app/.env; set +o allexport
-_build/prod/rel/NAME_OF_YOUR_APP/bin/NAME_OF_YOUR_APP eval NAME_OF_YOUR_APP.Release.migrate
-_build/prod/rel/NAME_OF_YOUR_APP/bin/NAME_OF_YOUR_APP start
+_build/prod/rel/discuss/bin/discuss eval Discuss.Release.migrate
+_build/prod/rel/discuss/bin/discuss start
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
