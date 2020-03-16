@@ -25,4 +25,6 @@ config :discuss, DiscussWeb.Repo,
   password: db_password,
   database: db_database,
   hostname: db_host,
-  pool_size: 10
+  pool_size: 10,
+  port: 5432,
+  show_sensitive_data_on_connection_error: true

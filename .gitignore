@@ -39,4 +39,4 @@ npm-debug.log
 .docker/app/.env
 .docker/app/.env.dev
 .docker/app/.env.docker
-.docker/pgdata/pgdata/*
+.docker/postgres/pgdata/*

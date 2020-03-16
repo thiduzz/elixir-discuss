@@ -33,6 +33,13 @@ RUN mix release
 # ---- Application Stage ----
 FROM alpine AS app
 
+RUN apk add --no-cache openssl
+
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
 ENV LANG=C.UTF-8
 
 # Install openssl
@@ -46,7 +53,4 @@ COPY --from=app_builder /app/_build .
 RUN chown -R app: ./prod
 USER app
 
-COPY ./.docker/entrypoint.sh .
-
-# Run the Phoenix app
-CMD ["./entrypoint.sh"]
+COPY .docker/entrypoint.sh .docker/entrypoint.sh

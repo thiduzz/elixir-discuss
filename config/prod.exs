@@ -58,8 +58,15 @@ config :discuss, DiscussWeb.Endpoint, server: true
 
 # Configure your database
 config :discuss, Discuss.Repo,
-  username: System.get_env("DB_USER"),
-  password: System.get_env("DB_PASSWORD"),
-  database: System.get_env("DB_DATABASE"),
-  hostname: System.get_env("DB_HOST"),
-  pool_size: 10
+  # username: System.get_env("DB_USER"),
+  # password: System.get_env("DB_PASSWORD"),
+  # database: System.get_env("DB_DATABASE"),
+  # hostname: System.get_env("DB_HOST"),
+
+  username: "postgres",
+  password: "thithi",
+  database: "discuss_dev",
+  hostname: "discussdb",
+  pool_size: 10,
+  port: 5432,
+  show_sensitive_data_on_connection_error: true

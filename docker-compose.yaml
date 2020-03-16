@@ -7,15 +7,23 @@ services:
   phoenix:
     # The build parameters for this container.
     image: discussion
+    entrypoint: dockerize -wait tcp://discussdb:5432 -timeout 40s ./.docker/entrypoint.sh
     restart: always  
     environment:
       # Variables to connect to our Postgres server
-      PGUSER: ${DB_USER}
-      PGPASSWORD: ${DB_PASSWORD}
-      PGDATABASE: ${DB_DATABASE}
-      PGPORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_PORT: ${DB_PORT}
       # Hostname of our Postgres container
-      PGHOST: ${DB_HOST}
+      DB_HOST: ${DB_HOST}
+      # Variables to connect to our Postgres server
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      APP_HOSTNAME: ${APP_HOSTNAME}
+      APP_PORT: ${APP_PORT}
+      DB_POOLSIZE: 10
     ports:
       # Mapping the port to make the Phoenix app accessible outside of the container
       - "4000:4000"
@@ -25,6 +33,7 @@ services:
     networks:
         - app-network
   db:
+    container_name: discussdb
     # We use the predefined Postgres image
     image: postgres:9.6
     restart: always  
@@ -32,11 +41,17 @@ services:
       # Set user/password for Postgres
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
       # Set a path where Postgres should store the data
       PGDATA: /var/lib/postgresql/data/pgdata
     restart: always
+    ports:
+      - "5433:5432"
     volumes:
-      - ./.docker/pgdata:/var/lib/postgresql/data
+      - ./.docker/postgres/pgdata:/var/lib/postgresql/data
+      - ./.docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
 
 networks:
     app-network:

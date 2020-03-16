@@ -33,6 +33,12 @@ set -o allexport; source ./.docker/app/.env; set +o allexport
 _build/prod/rel/discuss/bin/discuss eval Discuss.Release.migrate
 _build/prod/rel/discuss/bin/discuss start
 
+For docker:
+phxenv.docker (alias for set -o allexport; source ./.docker/app/.env.docker; set +o allexport)
+MIX_ENV=prod mix release
+docker build -t discussion . 
+docker-compose up -d
+
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
