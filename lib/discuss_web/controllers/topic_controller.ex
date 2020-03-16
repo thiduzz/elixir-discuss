@@ -4,6 +4,8 @@ defmodule DiscussWeb.TopicController do
   alias Discuss.Discussion.Topic
   alias Discuss.Repo
 
+  plug Discuss.Plugs.RequireAuth when action in [:create, :store, :edit, :update, :destroy]
+
   def index(conn, _params) do
     topics = Repo.all(Topic)
     render(conn, "index.html", topics: topics)

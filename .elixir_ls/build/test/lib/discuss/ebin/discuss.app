@@ -8,6 +8,7 @@
                         'Elixir.Discuss.DataCase','Elixir.Discuss.Discussion',
                         'Elixir.Discuss.Discussion.Topic',
                         'Elixir.Discuss.Discussion.User',
+                        'Elixir.Discuss.Plugs.RequireAuth',
                         'Elixir.Discuss.Release','Elixir.Discuss.Repo',
                         'Elixir.DiscussWeb',
                         'Elixir.DiscussWeb.AuthController',
