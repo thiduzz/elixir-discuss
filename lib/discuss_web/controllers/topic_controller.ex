@@ -2,9 +2,25 @@ defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
 
   alias Discuss.Discussion.Topic
+  alias DiscussWeb.Router.Helpers
   alias Discuss.Repo
 
+  #module plug
   plug Discuss.Plugs.RequireAuth when action in [:create, :store, :edit, :update, :destroy]
+  #function plug
+  plug :check_topic_owner when action in [:edit,:update,:destroy]
+
+  def check_topic_owner(conn, _params) do
+    %{params: %{"id" => topic_id}} = conn
+    if conn.assigns.user.id == Repo.get(Topic, topic_id).user_id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You are not authorized to perform this action")
+      |> redirect(to: Helpers.topic_path(conn, :index))
+      |> halt()
+    end
+  end
 
   def index(conn, _params) do
     topics = Repo.all(Topic)
@@ -23,12 +39,17 @@ defmodule DiscussWeb.TopicController do
   end
 
   def store(conn, %{"topic" => topic}) do
-    changeset = Topic.changeset(%Topic{}, topic)
+    #changeset = Topic.changeset(%Topic{}, topic)
+
+    changeset = conn.assigns.user
+      |> Ecto.build_assoc(:topics)
+      |> Topic.changeset(topic)
+
     case Repo.insert(changeset) do
       {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic created!")
-        |> redirect to: Routes.topic_path conn, :index
+        |> redirect(to: Routes.topic_path(conn, :index))
       {:error, changeset} ->
         render(conn, "create.html", changeset: changeset)
     end
@@ -42,10 +63,10 @@ defmodule DiscussWeb.TopicController do
     old_topic = Repo.get!(Topic, topic_id)
     changeset = Topic.changeset(old_topic,topic)
     case Repo.update changeset  do
-      {:ok, topic} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic #{topic_id} updated!")
-        |> redirect to: Routes.topic_path conn, :index
+        |> redirect(to: Routes.topic_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", changeset: changeset, topic: old_topic)
     end
@@ -55,6 +76,6 @@ defmodule DiscussWeb.TopicController do
     Repo.get!(Topic, topic_id) |> Repo.delete!
     conn
     |> put_flash(:info, "Topic #{topic_id} deleted!")
-    |> redirect to: Routes.topic_path conn, :index
+    |> redirect(to: Routes.topic_path(conn, :index))
   end
 end

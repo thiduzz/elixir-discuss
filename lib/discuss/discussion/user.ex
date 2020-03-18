@@ -2,6 +2,8 @@ defmodule Discuss.Discussion.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Discuss.Discussion.Topic
+
   schema "users" do
     field :name,                        :string
     field :email,                       :string
@@ -10,8 +12,9 @@ defmodule Discuss.Discussion.User do
     field :username,                    :string
     field :token,                       :string
     field :profile_picture_url,         :string
-
     timestamps()
+
+    has_many :topics, Topic
   end
 
   @doc false

@@ -33,7 +33,7 @@ defmodule DiscussWeb.AuthController do
         conn
         |> put_flash(:info, "Welcome #{user.name}!")
         |> put_session(:user_id, user.id)
-        |> redirect( to: Routes.topic_path(conn, :index))
+        |> redirect(to: Routes.topic_path(conn, :index))
       {:error, reason} ->
         conn
         |> put_flash(:error, "Failed to register with #{changeset.changes.provider}")
