@@ -38,6 +38,12 @@ defmodule DiscussWeb.TopicController do
     render(conn, "edit.html", changeset: changeset, topic: topic)
   end
 
+
+  def show(conn,  %{"id" => topic_id}) do
+    topic = Repo.get(Topic, topic_id)
+    render(conn, "show.html", topic: topic)
+  end
+
   def store(conn, %{"topic" => topic}) do
     #changeset = Topic.changeset(%Topic{}, topic)
 

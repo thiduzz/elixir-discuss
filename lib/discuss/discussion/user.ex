@@ -3,6 +3,7 @@ defmodule Discuss.Discussion.User do
   import Ecto.Changeset
 
   alias Discuss.Discussion.Topic
+  alias Discuss.Discussion.Comment
 
   schema "users" do
     field :name,                        :string
@@ -14,6 +15,7 @@ defmodule Discuss.Discussion.User do
     field :profile_picture_url,         :string
     timestamps()
 
+    has_many :comments, Comment
     has_many :topics, Topic
   end
 

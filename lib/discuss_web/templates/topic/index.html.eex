@@ -4,8 +4,8 @@
   <ul class="w-full">
     <%= for topic <- @topics do %>
       <%= content_tag :li, class: "py-2 border-round bg-white w-full shadow-lg my-2 px-5 cursor-pointer hover:opacity-75 flex flex-row items-center justify-between w-full" do %>
-        <span><%= topic.title %></span>
-        <%= if topic.user_id == @conn.assigns.user.id do %>
+         <%= link topic.title, to: Routes.topic_path(@conn, :show, topic.id), class: "text-red" %>
+        <%= if @conn.assigns[:user] && topic.user_id == @conn.assigns.user.id do %>
           <div class="block">
             <%= link "Edit", to: Routes.topic_path(@conn, :edit, topic.id), class: "bg-blue-500 p-2 m-1 rounded-md text-white hover:opacity-75 hover:text-white" %>
             <%= link "Delete", to: Routes.topic_path(@conn, :destroy, topic.id), method: :delete, class: "bg-blue-500 p-2 m-1 rounded-md text-white hover:opacity-75 hover:text-white" %>

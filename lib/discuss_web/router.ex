@@ -18,6 +18,7 @@ defmodule DiscussWeb.Router do
     pipe_through :browser
 
     get "/topics", TopicController, :index
+    get "/topics/:id", TopicController, :show
     get "/topics/create", TopicController, :create
     get "/topics/edit/:id", TopicController, :edit
 

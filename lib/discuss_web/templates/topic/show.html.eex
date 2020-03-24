@@ -1,0 +1,21 @@
+<section class="flex items-center bg-white shadow-lg">
+  <div class="flex flex-row items-center justify-start h-32 justify-center">
+    <div class="bg-blue-500 w-10 h-full self-stretch flex shadow-lg"></div>
+    <h1 class="text-3xl p-10"><%= @topic.title %></h1>
+  </div>
+</section>
+<section class="mt-5 flex items-center bg-white shadow-lg">
+  <div class="w-full flex justify-between h-20">
+    <input class="p-5" placeholder="Comment...">
+    <button class="px-5 bg-blue-500 border-0 rounded-none text-white h-full self-stretch">Send</button>
+  </div>
+</section>
+<section class="comments-box mt-5 bg-white shadow-lg p-5 overflow-x-hidden overflow-y-auto">
+  <ul><li>Test</li></ul>
+</section>
+
+<style>
+  .comments-box{    
+    height: 32rem;
+  }
+</style>
