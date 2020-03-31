@@ -6,12 +6,12 @@
 </section>
 <section class="mt-5 flex items-center bg-white shadow-lg">
   <div class="w-full flex justify-between h-20">
-    <input class="p-5" placeholder="Comment...">
+    <input class="p-5 w-full" placeholder="Comment...">
     <button class="px-5 bg-blue-500 border-0 rounded-none text-white h-full self-stretch">Send</button>
   </div>
 </section>
 <section class="comments-box mt-5 bg-white shadow-lg p-5 overflow-x-hidden overflow-y-auto">
-  <ul><li>Test</li></ul>
+  <ul id="comments-list"></ul>
 </section>
 
 <style>
@@ -19,3 +19,8 @@
     height: 32rem;
   }
 </style>
+
+<script>
+  window.topicId = <%= @topic.id %>;
+  window.userToken =  "<%= @conn.assigns[:user_token]%>";
+</script>

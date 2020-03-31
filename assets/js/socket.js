@@ -55,9 +55,38 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("comments:1", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+
+const topicId = window.topicId
+if(topicId !== undefined){
+  let channel = socket.channel(`comments:${topicId}`, {})
+  const commentsList = document.getElementById('comments-list');
+  
+  channel.join()
+    .receive("ok", resp => {
+      resp.comments.map((comment)=>{ 
+        commentsList.appendChild(renderComment(comment)) 
+      })
+    })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+
+  channel.on(`comments:${topicId}:store`, (resp) => commentsList.appendChild(renderComment(resp.comment)));
+
+  document.querySelector('button').addEventListener('click', () => {
+    const content = document.querySelector('input').value;
+    channel.push('comment:add', { content: content });
+  }); 
+}
+
+function renderComment(comment){
+  let child = document.createElement('li');
+  let content = document.createElement('div');
+  let creator = document.createElement('div');
+  child.classList.add("comment-item","border-b", "py-3", "m-0");
+  content.innerHTML = comment.content;
+  creator.innerHTML =  comment.user ? comment.user.name : "Unspecified";
+  child.appendChild(content);
+  child.appendChild(creator); 
+  return child;
+}
 
 export default socket

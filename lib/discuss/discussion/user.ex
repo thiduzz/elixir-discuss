@@ -5,6 +5,8 @@ defmodule Discuss.Discussion.User do
   alias Discuss.Discussion.Topic
   alias Discuss.Discussion.Comment
 
+  @derive {Jason.Encoder, only: [:name]}
+
   schema "users" do
     field :name,                        :string
     field :email,                       :string

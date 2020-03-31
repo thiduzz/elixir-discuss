@@ -8,6 +8,7 @@ defmodule DiscussWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug DiscussWeb.Plugs.SetUser
+    plug DiscussWeb.Plugs.SetWebsocketToken
   end
 
   pipeline :api do
@@ -37,7 +38,6 @@ defmodule DiscussWeb.Router do
     get "/:provider/callback", AuthController, :callback
 
   end
-
 
   # Other scopes may use custom stacks.
   # scope "/api", DiscussWeb do
